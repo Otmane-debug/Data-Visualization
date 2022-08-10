@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Performance</title>
+</head>
+<body>
+    <div style="margin-top:7.5%; text-align:center; font-size:2rem;">
+        <h1>Data</h1>
+    </div>
+    <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+        <form  method="POST">
+            {% csrf_token %}
+            <fieldset style="text-align:center;">
+                <legend><h1>Add Values :</h1></legend>
+                {{form.as_p}}
+                <button type="submit" name="save">Submit</button>     
+            </fieldset>
+        </form>
+    </div>
+
+    <div style="width:70%; margin-left:15%; margin-right:15%">
+        <form id="rang_f" action="#rang_f" method="get" style="width:60%%;margin-left:20%%;margin-right:20%%;">
+            {% csrf_token %}
+            <fieldset style="text-align:center;">
+                <legend><h1>Range Date :</h1></legend>
+                {{form_1.as_p}}
+                <button type="submit" name="save">Submit</button>     
+            </fieldset>
+        </form>
+    </div>
+
+    {% autoescape off %}
+        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+            <h2>Range Graph :</h2>
+            <p style="margin-left:5%;">Select range date to see result</p
+            {{ plot_range_div }}
+        </div>
+        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+            <h2>Days graph :</h2>
+            {% if ex != "" %}
+                <p>{{ex}}</p>
+            {% endif %}
+            {{ plot_days_div }}
+        </div>
+        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+            <h2>Month graph :</h2>
+            {% if ex_2 != "" %}
+                <p>{{ex_2}}</p>
+            {% endif %}
+            {{ plot_months_div }}
+        </div>
+    {% endautoescape %}
+</body>
+</html>
