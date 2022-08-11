@@ -4,6 +4,8 @@ from .models import Data
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import plotly.express as px
+from django.utils import timezone
+from datetime import datetime, timedelta, date
 
 
 def app(request):        
@@ -25,8 +27,8 @@ def app(request):
         st = request.GET.get("data_start")
         en = request.GET.get("data_end")
         
-        for date in Data.objects.filter(date__range=[st, en]).order_by("date"):
-            x_dates.append(str(date))
+        for d in Data.objects.filter(date__range=[st, en]).order_by("date"):
+            x_dates.append(str(d))
         
         for val in x_dates:
             tmp_val =  Data.objects.get(date=str(val)).value
@@ -51,7 +53,25 @@ def app(request):
         ex = "No Data found, enter data to see results."
         
 
+    # All mondays 
+    
+    
+    x_li = []
+    y_li = []
 
+    date_object = date(2022, 1, 1)
+    date_object = date_object + timedelta(days=-date_object.weekday(), weeks=1)
+    while date_object <= timezone.now().date():
+        sum = 0
+        x_li.append(date_object)
+        gte = str(date_object)
+        ld = str(date_object + timedelta(days=7))
+        for i in Data.objects.filter(date__gte=gte, date__lt=ld):
+            sum += Data.objects.get(date=i.date).value
+        y_li.append(round(sum/7, 3))
+        print("Week " + str(gte) + " avg : " + str(sum/7))
+        date_object += timedelta(days=7)
+    
 
     # all months
 
@@ -92,6 +112,8 @@ def app(request):
     
     plot_range_div = plot([Scatter(x=x_dates, y=y_values, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
 
+    plot_mondays_div = plot([Scatter(x=x_li, y=y_li, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
+
     
     # Data to render 
     
@@ -102,6 +124,7 @@ def app(request):
         "form": form,
         "form_1": form_1,
         "plot_days_div": plot_days_div,
+        "plot_mondays_div": plot_mondays_div,
         "plot_months_div": plot_months_div,
         "plot_range_div": plot_range_div,
         "ex": ex,

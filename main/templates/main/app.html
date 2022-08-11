@@ -45,6 +45,13 @@
             {{ plot_days_div }}
         </div>
         <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+            <h2>weeks graph :</h2>
+            {% if ex != "" %}
+                <p>{{ex}}</p>
+            {% endif %}
+            {{ plot_mondays_div }}
+        </div>
+        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
             <h2>Month graph :</h2>
             {% if ex_2 != "" %}
                 <p>{{ex_2}}</p>
