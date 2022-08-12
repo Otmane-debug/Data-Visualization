@@ -6,11 +6,12 @@
     <title>Performance</title>
 </head>
 <body>
-    <div style="margin-top:7.5%; text-align:center; font-size:2rem;">
+    <header style="margin-top:7.5%; text-align:center; font-size:2rem;">
         <h1>Data</h1>
-    </div>
+    </header>
+
     <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
-        <form  method="POST">
+        <form  method="POST" id="val" action="#vals">
             {% csrf_token %}
             <fieldset style="text-align:center;">
                 <legend><h1>Add Values :</h1></legend>
@@ -18,6 +19,50 @@
                 <button type="submit" name="save">Submit</button>     
             </fieldset>
         </form>
+    </div>
+    <div>
+        {% autoescape off %}
+            <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+                <h2>Days graph :</h2>
+                {% if ex != "" %}
+                    <p>{{ex}}</p>
+                {% endif %}
+                {{ plot_days_div }}
+            </div>
+
+            <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+                <h2>Month graph :</h2>
+                {% if ex_2 != "" %}
+                    <p>{{ex_2}}</p>
+                {% endif %}
+                {{ plot_months_div }}
+            </div>
+        {% endautoescape %}
+    </div>
+
+    <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+        <form  method="POST"id="mon" action="#mon">
+            {% csrf_token %}
+            <fieldset style="text-align:center;">
+                <legend><h1>Add Mondays Value :</h1></legend>
+                {{form_2.as_p}}
+                {% if con == True %}
+                <button type="submit" name="save">Submit</button>
+                {% endif %}
+                {% if con == False %}
+                <button type="submit" name="save" disabled=True>Submit</button>
+                {% endif %}
+            </fieldset>
+        </form>
+    </div>    
+    <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+        {% autoescape off %}
+        <h2>weeks graph :</h2>
+        {% if ex != "" %}
+            <p>{{ex}}</p>
+        {% endif %}
+        {{ plot_mondays_div }}
+        {% endautoescape %}
     </div>
 
     <div style="width:70%; margin-left:15%; margin-right:15%">
@@ -30,34 +75,14 @@
             </fieldset>
         </form>
     </div>
-
-    {% autoescape off %}
-        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
-            <h2>Range Graph :</h2>
-            <p style="margin-left:5%;">Select range date to see result</p
-            {{ plot_range_div }}
-        </div>
-        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
-            <h2>Days graph :</h2>
-            {% if ex != "" %}
-                <p>{{ex}}</p>
-            {% endif %}
-            {{ plot_days_div }}
-        </div>
-        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
-            <h2>weeks graph :</h2>
-            {% if ex != "" %}
-                <p>{{ex}}</p>
-            {% endif %}
-            {{ plot_mondays_div }}
-        </div>
-        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
-            <h2>Month graph :</h2>
-            {% if ex_2 != "" %}
-                <p>{{ex_2}}</p>
-            {% endif %}
-            {{ plot_months_div }}
-        </div>
-    {% endautoescape %}
+    <div>
+        {% autoescape off %}
+            <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+                <h2>Range Graph :</h2>
+                <p style="margin-left:5%;">Select range date to see result</p
+                {{ plot_range_div }}
+            </div>
+        {% endautoescape %}
+    </div>
 </body>
 </html>

@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .forms import AddData, RangeData
-from .models import Data
+from .forms import AddData, RangeData, Add_Other_Data
+from .models import Data, Other_Data
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import plotly.express as px
 from django.utils import timezone
-from datetime import datetime, timedelta, date
+from datetime import timedelta, date
 
 
 def app(request):        
@@ -55,23 +55,22 @@ def app(request):
 
     # All mondays 
     
-    
+    con = False
     x_li = []
     y_li = []
 
     date_object = date(2022, 1, 1)
     date_object = date_object + timedelta(days=-date_object.weekday(), weeks=1)
+
     while date_object <= timezone.now().date():
-        sum = 0
         x_li.append(date_object)
-        gte = str(date_object)
-        ld = str(date_object + timedelta(days=7))
-        for i in Data.objects.filter(date__gte=gte, date__lt=ld):
-            sum += Data.objects.get(date=i.date).value
-        y_li.append(round(sum/7, 3))
-        print("Week " + str(gte) + " avg : " + str(sum/7))
+        y_li.append(Other_Data.objects.get(date=date_object).value)
         date_object += timedelta(days=7)
     
+    if timezone.now().date().weekday() == 0:
+        con = True
+    else:
+        con = False
 
     # all months
 
@@ -119,16 +118,19 @@ def app(request):
     
     form = AddData()
     form_1 = RangeData()
+    form_2 = Add_Other_Data()
 
     context = {
         "form": form,
         "form_1": form_1,
+        "form_2": form_2,
         "plot_days_div": plot_days_div,
         "plot_mondays_div": plot_mondays_div,
         "plot_months_div": plot_months_div,
         "plot_range_div": plot_range_div,
         "ex": ex,
         "ex_2": ex_2,
+        "con": con,
     }
     
 
