@@ -64,6 +64,15 @@
         {{ plot_mondays_div }}
         {% endautoescape %}
     </div>
+    <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+        {% autoescape off %}
+        <h2>Trimestre graph :</h2>
+        {% if ex != "" %}
+            <p>{{ex}}</p>
+        {% endif %}
+        {{ plot_trimester_div }}
+        {% endautoescape %}
+    </div>
 
     <div style="width:70%; margin-left:15%; margin-right:15%">
         <form id="rang_f" action="#rang_f" method="get" style="width:60%%;margin-left:20%%;margin-right:20%%;">

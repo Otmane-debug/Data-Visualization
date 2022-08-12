@@ -71,8 +71,64 @@ def app(request):
         con = True
     else:
         con = False
+        
+    
+    # Trimestre
+    
+    avg = []
+    ss = []
+    
+    if Other_Data.objects.filter(date__range=["2022-01-01", "2022-03-31"]):
+        sum = 0
+        le = len(Other_Data.objects.filter(date__range=["2022-01-01", "2022-03-31"]))
+        
+        for v in Other_Data.objects.filter(date__range=["2022-01-01", "2022-03-31"]):
+            sum += v.value
+        
+        ss.append("S1")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-01-01\", \"2022-03-31\"] :No Data Exist")
+        
+    if Other_Data.objects.filter(date__range=["2022-04-01", "2022-06-30"]):
+        sum = 0
+        le = len(Other_Data.objects.filter(date__range=["2022-04-01", "2022-06-30"]))
+        
+        for v in Other_Data.objects.filter(date__range=["2022-04-01", "2022-06-30"]):
+            sum += v.value
+        
+        ss.append("S2")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-04-01\", \"2022-06-30\"] :No Data Exist")
+        
+    if Other_Data.objects.filter(date__range=["2022-07-01", "2022-09-30"]):
+        sum = 0
+        le = len(Other_Data.objects.filter(date__range=["2022-07-01", "2022-09-30"]))
+        
+        for v in Other_Data.objects.filter(date__range=["2022-07-01", "2022-09-30"]):
+            sum += v.value
+        
+        ss.append("S3")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-07-01\", \"2022-09-30\"] :No Data Exist")
+       
+    if Other_Data.objects.filter(date__range=["2022-10-01", "2022-12-31"]):
+        sum = 0
+        le = len(Other_Data.objects.filter(date__range=["2022-10-01", "2022-12-31"]))
+        
+        for v in Other_Data.objects.filter(date__range=["2022-10-01", "2022-12-31"]):
+            sum += v.value
 
-    # all months
+        ss.append("S4")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-10-01\", \"2022-12-31\"] :No Data Exist")
+    
+        
+
+    # year
 
     avg_val = []
     mois_val = []
@@ -113,6 +169,9 @@ def app(request):
 
     plot_mondays_div = plot([Scatter(x=x_li, y=y_li, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
 
+    plot_trimester_div = plot([Scatter(x=ss, y=avg, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
+
+
     
     # Data to render 
     
@@ -126,6 +185,7 @@ def app(request):
         "form_2": form_2,
         "plot_days_div": plot_days_div,
         "plot_mondays_div": plot_mondays_div,
+        "plot_trimester_div": plot_trimester_div,
         "plot_months_div": plot_months_div,
         "plot_range_div": plot_range_div,
         "ex": ex,
