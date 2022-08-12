@@ -6,7 +6,7 @@
     <title>Performance</title>
 </head>
 <body>
-    <div style="margin-top:7.5%; text-align:center; font-size:2rem;">
+    <div style="margin-top:4.5%; text-align:center; font-size:2rem;">
         <h1>Data</h1>
     </div>
     <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
@@ -39,11 +39,13 @@
         </div>
         <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
             <h2>Days graph :</h2>
-            {% if ex != "" %}
-                <p>{{ex}}</p>
-            {% endif %}
             {{ plot_days_div }}
         </div>
+        <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
+            <h2>Trimesters graph :</h2>
+            {{ plot_trimester_div }}
+        </div>
+
         <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
             <h2>weeks graph :</h2>
             {% if ex != "" %}
@@ -51,6 +53,7 @@
             {% endif %}
             {{ plot_mondays_div }}
         </div>
+
         <div style="margin-top:7%; width:70%; margin-left:15%; margin-right:15%">
             <h2>Month graph :</h2>
             {% if ex_2 != "" %}

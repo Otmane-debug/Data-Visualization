@@ -52,7 +52,60 @@ def app(request):
     else:
         ex = "No Data found, enter data to see results."
         
+    # Trimesters
+    
+    avg = []
+    ss = []
+    
+    if Data.objects.filter(date__range=["2022-01-01", "2022-03-31"]):
+        sum = 0
+        le = len(Data.objects.filter(date__range=["2022-01-01", "2022-03-31"]))
+        
+        for v in Data.objects.filter(date__range=["2022-01-01", "2022-03-31"]):
+            sum += v.value
+        
+        ss.append("S1")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-01-01\", \"2022-03-31\"] :No Data Exist")
+        
+    if Data.objects.filter(date__range=["2022-04-01", "2022-06-30"]):
+        sum = 0
+        le = len(Data.objects.filter(date__range=["2022-04-01", "2022-06-30"]))
+        
+        for v in Data.objects.filter(date__range=["2022-04-01", "2022-06-30"]):
+            sum += v.value
+        
+        ss.append("S2")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-04-01\", \"2022-06-30\"] :No Data Exist")
+        
+    if Data.objects.filter(date__range=["2022-07-01", "2022-09-30"]):
+        sum = 0
+        le = len(Data.objects.filter(date__range=["2022-07-01", "2022-09-30"]))
+        
+        for v in Data.objects.filter(date__range=["2022-07-01", "2022-09-30"]):
+            sum += v.value
+        
+        ss.append("S3")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-07-01\", \"2022-09-30\"] :No Data Exist")
+       
+    if Data.objects.filter(date__range=["2022-10-01", "2022-12-31"]):
+        sum = 0
+        le = len(Data.objects.filter(date__range=["2022-10-01", "2022-12-31"]))
+        
+        for v in Data.objects.filter(date__range=["2022-10-01", "2022-12-31"]):
+            sum += v.value
 
+        ss.append("S4")
+        avg.append(round(sum/le, 3))
+    else:
+        print("date__range=[\"2022-10-01\", \"2022-12-31\"] :No Data Exist")
+    
+        
     # All mondays 
     
     
@@ -110,6 +163,8 @@ def app(request):
     
     plot_months_div = plot([Scatter(x=mois_val, y=avg_val, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
     
+    plot_trimester_div = plot([Scatter(x=ss, y=avg, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
+    
     plot_range_div = plot([Scatter(x=x_dates, y=y_values, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
 
     plot_mondays_div = plot([Scatter(x=x_li, y=y_li, mode='lines', name='test', opacity=0.8, marker_color='green')], output_type='div', show_link=False, link_text="")
@@ -126,6 +181,7 @@ def app(request):
         "plot_days_div": plot_days_div,
         "plot_mondays_div": plot_mondays_div,
         "plot_months_div": plot_months_div,
+        "plot_trimester_div": plot_trimester_div,
         "plot_range_div": plot_range_div,
         "ex": ex,
         "ex_2": ex_2,
